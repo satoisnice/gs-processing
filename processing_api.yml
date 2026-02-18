@@ -1,0 +1,92 @@
+openapi: 3.0.0
+info:
+  description: Storage API for persisting individual server health readings and player telemetry events
+  version: "1.0.0"
+  title: Game Server Storage API
+  contact:
+    email: cbell86@my.bcit.ca
+
+paths:
+  /stats:
+    get:
+      summary: Gets the event /stats
+      operationId: app.get_stats
+      description: Gets server health and player telemetry statistics
+      responses:
+        '200':
+          description: Successfully returned a stats object
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/EventStats'
+
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+
+components:
+  schemas:
+    Error:
+      type: object
+      required:
+        - message
+      properties: 
+        message: 
+          type: string
+          example: Invalid request
+
+    EventStats:
+      type: object
+      required:
+        - num_server_health_readings
+        - num_player_telemetry_events
+        - max_players
+        - avg_players
+        - min_players
+        - avg_cpu_usage
+        - avg_player_ping
+        - last_updated
+      properties:
+        num_server_health_readings:
+          type: integer
+          example: 1200
+        num_player_telemetry_events:
+          type: integer
+          example: 5400
+
+        max_players:
+          type: integer
+          description: Maximum active_players observed across all server health readings
+          example: 2500
+        avg_players:
+          type: number
+          description: Rolling average of active_players across all server health readings
+          example: 825.4
+        min_players:
+          type: integer
+          description: Minimum active_players observed across all server health readings
+          example: 3
+
+        avg_cpu_usage:
+          type: number
+          description: Rolling average of cpu_usage across all server health readings
+          example: 42.7
+
+        avg_player_ping:
+          type: number
+          description: Rolling average of player_ping across all player telemetry events
+          example: 58.9
+
+        last_updated:
+          type: string
+          format: date-time
+          description: timestamp marking the end of the last processed time window
+          example: "2026-02-11T01:10:00Z"

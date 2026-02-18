@@ -1,0 +1,16 @@
+{
+  "num_server_health_readings": 200,
+  "num_player_telemetry_events": 200,
+  "max_players": 498,
+  "min_players": 0,
+  "avg_players": 250.305,
+  "avg_cpu_usage": 45.99,
+  "avg_player_ping": 134.955,
+  "last_updated": "2026-02-11T18:28:53Z",
+  "_player_sum": 50061.0,
+  "_player_count": 200,
+  "_cpu_sum": 9198.0,
+  "_cpu_count": 200,
+  "_ping_sum": 26991.0,
+  "_ping_count": 200
+}

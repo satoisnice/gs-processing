@@ -1,0 +1,10 @@
+version: 1
+datastore:
+  url: http://localhost:8089
+events:
+  player_telemetry_path: /events/player-telemetry
+  server_health_path: /events/server-health
+scheduler:
+  period_sec: 5
+stats:
+  file: data/stats.json
