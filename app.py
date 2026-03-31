@@ -9,12 +9,14 @@ import yaml
 import requests
 import connexion
 from apscheduler.schedulers.background import BackgroundScheduler
+from connexion.middleware import MiddlewarePosition
+from starlette.middleware.cors import CORSMiddleware
 
 
-with open("app_conf.yml", "r") as f:
+with open("/app/config/processing_config.yml", "r") as f:
     app_config = yaml.safe_load(f)
 
-with open("log_conf.yml", "r") as f:
+with open("/app/config/log_config.yml", "r") as f:
     LOG_CONFIG = yaml.safe_load(f)
     logging.config.dictConfig(LOG_CONFIG)
 
@@ -26,6 +28,9 @@ HEALTH_PATH = app_config["events"]["server_health_path"]
 PERIOD_SEC = int(app_config["scheduler"]["period_sec"])
 STATS_FILE = app_config["stats"]["file"]
 
+def get_config():
+    with open("/app/config/processing_config.yml", "r") as f:
+        return yaml.safe_load(f)
 
 def now_utc_iso() -> str:
     return datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
@@ -171,6 +176,7 @@ def pick_ts(d: Dict[str, Any]) -> Optional[str]:
 
 def populate_stats():
     logger.info("Periodic processing has started")
+    logger.info(f"current config: {get_config()}")
 
     stats = load_stats_create_if_missing()
 
@@ -329,6 +335,14 @@ def init_scheduler():
 app = connexion.FlaskApp(__name__, specification_dir=".")
 app.add_api("processing_api.yml", strict_validation=True, validate_responses=True)
 
+app.add_middleware(
+    CORSMiddleware,
+    position=MiddlewarePosition.BEFORE_EXCEPTION,
+    allow_origins=["*"], # dont do in prod
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 if __name__ == "__main__":
     init_scheduler()
-    app.run(port=8090)
+    app.run(port=8090, host="0.0.0.0")

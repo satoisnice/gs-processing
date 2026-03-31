@@ -1,3 +1,41 @@
-connexion[flask]
-connexion[uvicorn]
-swagger-ui-bundle
+# connexion[flask]
+# connexion[uvicorn]
+# swagger-ui-bundle
+a2wsgi==1.10.10
+anyio==4.12.1
+APScheduler==3.11.2
+asgiref==3.11.1
+attrs==25.4.0
+blinker==1.9.0
+certifi==2026.1.4
+charset-normalizer==3.4.4
+click==8.3.1
+connexion==3.3.0
+Flask==3.1.2
+h11==0.16.0
+httpcore==1.0.9
+httptools==0.7.1
+httpx==0.28.1
+idna==3.11
+inflection==0.5.1
+itsdangerous==2.2.0
+Jinja2==3.1.6
+jsonschema==4.26.0
+jsonschema-specifications==2025.9.1
+MarkupSafe==3.0.3
+python-dotenv==1.2.1
+python-multipart==0.0.22
+PyYAML==6.0.3
+referencing==0.37.0
+requests==2.32.5
+rpds-py==0.30.0
+starlette==0.52.1
+swagger_ui_bundle==1.1.0
+typing_extensions==4.15.0
+tzlocal==5.3.1
+urllib3==2.6.3
+uvicorn==0.40.0
+uvloop==0.22.1
+watchfiles==1.1.1
+websockets==16.0
+Werkzeug==3.1.5
